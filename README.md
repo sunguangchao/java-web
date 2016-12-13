@@ -1,0 +1,1 @@
+# shopping-management-system-mine
