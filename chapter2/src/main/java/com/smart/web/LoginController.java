@@ -12,6 +12,8 @@ import java.util.Date;
 
 /**
  * Created by 11981 on 2017/4/4.
+ * POJO控制器类
+ * @RequestMapping 指定方法如何映射请求路径
  */
 //标注成为一个Spring MVC的Controller
 @RestController
@@ -23,10 +25,11 @@ public class LoginController {
     public String loginPage(){
         return "login";
     }
+
     //负责处理/loginCheck.html的请求
     @RequestMapping(value = "/loginCheck.html")
     public ModelAndView loginCheck(HttpServletRequest request, LoginCommand loginCommand){
-        boolean isValidUser = userService.hasMatcUser(loginCommand.getUserName(),
+        boolean isValidUser = userService.hasMatchUser(loginCommand.getUserName(),
                 loginCommand.getPassword());
         if (!isValidUser){
             return new ModelAndView("login", "error", "用户名或密码错误。");

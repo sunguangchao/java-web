@@ -5,6 +5,8 @@ import java.util.Date;
 
 /**
  * Created by 11981 on 2017/3/12.
+ * 用户领域对象
+ * 领域对象使数据库表操作以面向对象的方式进行
  */
 
 //领域对象一般要实现Serializable接口，以便进行序列化

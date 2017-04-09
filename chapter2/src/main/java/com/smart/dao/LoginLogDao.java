@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Created by 11981 on 2017/3/12.
+ * JdbcTemplate本身需要一个DateSource，这里通过@Autowired提供
+ * 对应在smart-context.xml中定义一个JdbcTemplateBean，通过Spring容器
+ * 上下文自动绑定机制进行Bean的注入
  */
 
 @Repository

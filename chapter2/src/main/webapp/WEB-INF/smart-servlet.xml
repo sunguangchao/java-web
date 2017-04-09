@@ -6,10 +6,12 @@
        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context-4.0.xsd">
-    <!-- 扫描web包，应用Spring的注解 -->
+    <!-- SpringMVC配置文件
+    扫描web包，应用Spring的注解 -->
     <context:component-scan base-package="com.smart.web"/>
 
-    <!-- 配置视图解析器，将ModelAndView及字符串解析为具体的页面 -->
+    <!-- 配置视图解析器，将ModelAndView及字符串解析为具体的页面
+    通过prefix指定在视图名前所添加的前缀，通过suffix指定在视图名称后面所添加的后缀-->
     <bean
             class="org.springframework.web.servlet.view.InternalResourceViewResolver"
             p:viewClass="org.springframework.web.servlet.view.JstlView"

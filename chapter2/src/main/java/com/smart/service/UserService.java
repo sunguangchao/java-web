@@ -17,26 +17,29 @@ public class UserService {
     private UserDao userDao;
     private LoginLogDao loginLogDao;
 
-    @Autowired //注入UserDao的Bean
+    //注入UserDao的Bean
+    @Autowired
     public void setUserDao(UserDao userDao){
         this.userDao = userDao;
     }
 
-    @Autowired //注入LoginLogDao的Bean
+    //注入LoginLogDao的Bean
+    @Autowired
     public void setLoginLogDao(LoginLogDao loginLogDao){
         this.loginLogDao = loginLogDao;
     }
 
-    public boolean hasMatcUser(String userName, String password){
+    //檢查用戶名/密碼的正確性
+    public boolean hasMatchUser(String userName, String password){
         int matchCount = userDao.getMatchCount(userName, password);
         return matchCount > 0;
     }
-
+    //以用戶名為條件加載User對象
     public User findUserByUserName(String userName){
         return userDao.findUserByUserName(userName);
     }
 
-    @Transactional //事务注解
+    @Transactional //事务注解，讓該方法運行在事务环境中
     public void loginSuccess(User user){
         user.setCredits(5 + user.getCredits());
         LoginLog loginLog = new LoginLog();
