@@ -13,7 +13,7 @@ public class GithubRepoPageProcessor implements PageProcessor{
 
     public void process(Page page){
         page.addTargetRequests(page.getHtml().links().regex("(https://github\\.com/\\w+/\\w+)").all());
-        page.putField("auther", page.getUrl().regex("https://github\\.com(\\w+)/.*").toString());
+        page.putField("author", page.getUrl().regex("https://github\\.com/(\\w+)/.*").toString());
         page.putField("name", page.getHtml().xpath("//h1[@class='entry-title public']/strong/a/text()").toString());
         if (page.getResultItems().get("name") == null){
             page.setSkip(true);
@@ -29,7 +29,7 @@ public class GithubRepoPageProcessor implements PageProcessor{
     public static void main(String[] args){
         Spider.create(new GithubRepoPageProcessor())
                 .addUrl("https://github.com/code4craft")
-                .addPipeline(new JsonFilePipeline("F:\\wait_to_realise\\test"))
+     //           .addPipeline(new JsonFilePipeline("F:\\wait_to_realise\\spider"))
                 .thread(5)
                 .run();
     }
