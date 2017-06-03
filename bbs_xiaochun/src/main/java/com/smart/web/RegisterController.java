@@ -41,6 +41,7 @@ public class RegisterController extends BaseController{
             view.addObject("errorMsg", "用户名已经存在，请选择其他的名字");
             view.setViewName("forward:/register.jsp");
         }
+        //将用户保存到Session中
         setSessionUser(request,user);
         return view;
     }

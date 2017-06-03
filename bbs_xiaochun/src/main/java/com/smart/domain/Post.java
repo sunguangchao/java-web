@@ -37,7 +37,7 @@ public class Post extends BaseDomain {
     @Column(name = "create_time")
     private Date createTime;
 
-    @ManyToOne
+    @ManyToOne//多对一关系
     @JoinColumn(name = "user_id")
     private User user;
 

@@ -84,7 +84,7 @@ public class ForumManageController extends BaseController{
      * 设置版块管理
      * @return
      */
-    @RequestMapping(value = "/ forum/setBoardManager", method = RequestMethod.POST)
+    @RequestMapping(value = "/forum/setBoardManager", method = RequestMethod.POST)
     public ModelAndView setBoardManager(@RequestParam("userName") String userName,
                                         @RequestParam("boardId") String boardId){
         ModelAndView view = new ModelAndView();

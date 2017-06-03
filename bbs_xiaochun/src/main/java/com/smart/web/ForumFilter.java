@@ -21,25 +21,28 @@ public class ForumFilter implements Filter{
     private static final String[] INHERENT_ESCAPE_URIS =  { "/index.jsp",
             "/index.html", "/login.jsp", "/login/doLogin.html",
             "/register.jsp", "/register.html", "/board/listBoardTopics-",
-            "/board/listTopicPosts-" };
-
+            "/board/listTopicPosts-","/postManage.jsp","/postManage.html" };
+    //执行过滤
     public void doFilter(ServletRequest request, ServletResponse response,
                          FilterChain chain) throws IOException, ServletException{
+        //保证该过滤器在一次请求中只被调用一次
         if (request != null && request.getAttribute(FILTERED_REQUSET) != null){
             chain.doFilter(request,response);
         }else{
+            //设置过滤标识，防止一次请求多次过滤
             request.setAttribute(FILTERED_REQUSET, Boolean.TRUE);
             HttpServletRequest httpRequest = (HttpServletRequest) request;
             User userContext = getSessionUser(httpRequest);
-
+            //用户未登录，且当前URL资源需要登录才能访问
             if (userContext == null && !isURILogin(httpRequest.getRequestURI(), httpRequest)){
                 String toUrl = httpRequest.getRequestURL().toString();
                 if (!StringUtils.isEmpty(httpRequest.getQueryString())){
                     toUrl += "?" + httpRequest.getQueryString();
                 }
 
+                //将用户的请求URL保存到Session中，用于登录成功后跳到目标URL
                 httpRequest.getSession().setAttribute(LOGIN_TO_URL, toUrl);
-
+                //转发到登录页面
                 request.getRequestDispatcher("/login.jsp").forward(request, response);
 
                 return;

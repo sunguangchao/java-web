@@ -5,6 +5,7 @@
   <!-- 覆盖default servlet的/, springmvc servlet将处理原来处理静态资源的映射 -->
   <description>小春论坛</description>
   <display-name>xiaochun</display-name>
+  <!--指定Spring配置文件和初始化监听器-->
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath:/applicationContext.xml</param-value>
@@ -13,6 +14,7 @@
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
   <filter>
+    <!--在Web层打开Hibernate Session，以便可以在Web层访问到Hibernate延迟加载的数据-->
     <filter-name>hibernateFilter</filter-name>
     <filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
     <init-param>
@@ -36,6 +38,7 @@
     <filter-name>hibernateFilter</filter-name>
     <url-pattern>*.html</url-pattern>
   </filter-mapping>
+  <!--论坛登录验证过滤器-->
   <filter>
     <filter-name>forumFilter</filter-name>
     <filter-class>com.smart.web.ForumFilter</filter-class>
@@ -48,6 +51,7 @@
     <filter-name>forumFilter</filter-name>
     <url-pattern>*.jsp</url-pattern>
   </filter-mapping>
+  <!--使用Spring的编码转换过滤器，将请求信息的编码统一转换为UTF-8，以避免中文乱码问题-->
   <filter>
     <filter-name>encodingFilter</filter-name>
     <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -68,11 +72,13 @@
     <filter-name>encodingFilter</filter-name>
     <url-pattern>*.jsp</url-pattern>
   </filter-mapping>
+  <!--定义SpringMVC的前端控制器-->
   <servlet>
     <servlet-name>xiaochun</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <load-on-startup>3</load-on-startup>
   </servlet>
+  <!--将以.html为后缀的URL由xiaochun Servlet处理-->
   <servlet-mapping>
     <servlet-name>xiaochun</servlet-name>
     <url-pattern>*.html</url-pattern>
@@ -93,6 +99,7 @@
     <filter-name>HiddenHttpMethodFilter</filter-name>
     <servlet-name>xiaochun</servlet-name>
   </filter-mapping>
+  <!--网站默认页面-->
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>

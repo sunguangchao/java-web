@@ -1,6 +1,7 @@
 package com.smart.service;
 
 import com.smart.dao.LoginLogDao;
+import com.smart.dao.PostDao;
 import com.smart.dao.UserDao;
 import com.smart.domain.LoginLog;
 import com.smart.domain.User;
@@ -19,6 +20,7 @@ public class UserService {
 
     private UserDao userDao;
     private LoginLogDao loginLogDao;
+    private PostDao postDao;
 
     @Autowired
     public void setUserDao(UserDao userDao){
@@ -30,6 +32,8 @@ public class UserService {
         this.loginLogDao = loginLogDao;
     }
 
+    @Autowired
+    public void setPostDao(PostDao postDao) { this.postDao = postDao;}
     /**
      * 注册一个新用户,如果用户名已经存在此抛出UserExistException的异常
      * @param user
@@ -119,5 +123,9 @@ public class UserService {
         loginLog.setLoginDate(new Date());
         userDao.update(user);
         loginLogDao.save(loginLog);
+    }
+
+    public List<String> getPostByUserId(int userId){
+        return postDao.getPostByUserId(userId);
     }
 }

@@ -2,10 +2,12 @@
 package com.smart.web;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.smart.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,12 +32,15 @@ import com.smart.service.ForumService;
 public class BoardManageController extends BaseController {
 
 	private ForumService forumService;
+	private UserService userService;
 
 	@Autowired
 	public void setForumService(ForumService forumService) {
 		this.forumService = forumService;
 	}
 
+	@Autowired
+	public void setUserService(UserService userService) {this.userService = userService;}
 	/**
 	 * 列出论坛模块下的主题帖子
 	 * 
@@ -163,5 +168,21 @@ public class BoardManageController extends BaseController {
 		}
 		String targetUrl = "/board/listBoardTopics-" + boardId + ".html";
 		return "redirect:"+targetUrl;
+	}
+
+	/**
+	 *个人帖子管理（不包括管理者）
+	 *主要功能：用户登录后展示自己所回复过的内容
+	 */
+
+	@RequestMapping(value = "/board/postManage",method = RequestMethod.GET)
+	public ModelAndView postManage(HttpServletRequest request){
+		User user = (User)request.getSession().getAttribute(CommonConstant.USER_CONTEXT);
+		int id = user.getUserId();
+		List<String> post = userService.getPostByUserId(id);
+		ModelAndView view = new ModelAndView();
+		view.addObject("post",post);
+		view.setViewName("postManage");
+		return view;
 	}
 }

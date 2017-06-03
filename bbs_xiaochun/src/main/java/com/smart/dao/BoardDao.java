@@ -7,6 +7,10 @@ import java.util.Iterator;
 
 /**
  * Created by 11981 on 2017/4/23.
+ * @Repository 用于对DAO实现类进行标注
+ * @Service 用于对Service实现类进行标注
+ * @Controller 用于对Controller实现类进行标注
+ *
  */
 
 @Repository

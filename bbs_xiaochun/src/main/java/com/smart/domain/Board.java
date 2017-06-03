@@ -13,9 +13,9 @@ import java.util.Set;
  * NONSTRICT_READ_WRITE:不严格的读写模式，使用该模式不会对缓存数据加锁
  */
 
-@Entity
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Table(name = "t_board")
+@Entity//每个PO类都是一个实体Bean
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)//设置缓存策略
+@Table(name = "t_board")//Board指定对应数据库表
 public class Board extends BaseDomain {
 
     //定义主键
@@ -36,7 +36,7 @@ public class Board extends BaseDomain {
     private int topicNum;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "manBoards", fetch = FetchType.LAZY)
-    private Set<User> users = new HashSet<User>();
+    private Set<User> users = new HashSet<User>();//用户名不能重复，选用HashSet
 
     public int getBoardId() {
         return boardId;

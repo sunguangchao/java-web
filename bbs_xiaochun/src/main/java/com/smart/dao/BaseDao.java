@@ -5,7 +5,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.HibernateTemplate;
-import org.springframework.orm.hibernate4.SessionFactoryUtils;
 import org.springframework.util.Assert;
 
 import java.io.Serializable;
@@ -17,6 +16,7 @@ import java.util.regex.Pattern;
 
 /**
  * Created by 11981 on 2017/4/23.
+ * DAO基类，其他DAO可以直接继承这个DAO，不但可以复用共用方法，还可以获得泛型的好处
  */
 public class BaseDao<T> {
     private Class<T> entityClass;
@@ -128,14 +128,14 @@ public class BaseDao<T> {
     public Page pagedQuery(String hql, int pageNo, int pageSize, Object... values){
         Assert.hasText(hql);
         Assert.isTrue(pageNo >= 1, "pageNo should start from 1");
-
+        //Count查询
         String countQueryString = " select count (*) " + removeSelect(removeOrders(hql));
         List countList = getHibernateTemplate().find(countQueryString, values);
         long totalCount = (Long) countList.get(0);
 
         if (totalCount < 1)
             return new Page();
-
+        //实际查询返回分页对象
         int startIndex = Page.getStartOfPage(pageNo, pageSize);
         Query query = createQuery(hql, values);
         List list = query.setFirstResult(startIndex).setMaxResults(pageSize).list();
