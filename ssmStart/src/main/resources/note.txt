@@ -1,0 +1,6 @@
+spring-dao.xml
+-value
+jdbc.properties
+-jdbc.url
+spring-service
+-basePackage
