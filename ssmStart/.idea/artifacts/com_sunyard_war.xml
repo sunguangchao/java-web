@@ -1,8 +1,8 @@
 <component name="ArtifactManager">
-  <artifact type="war" name="ssmStart:war">
+  <artifact type="war" name="com.sunyard:war">
     <output-path>$PROJECT_DIR$/target</output-path>
     <root id="archive" name="com.sunyard.war">
-      <element id="artifact" artifact-name="ssmStart:war exploded" />
+      <element id="artifact" artifact-name="com.sunyard:war exploded" />
     </root>
   </artifact>
 </component>
