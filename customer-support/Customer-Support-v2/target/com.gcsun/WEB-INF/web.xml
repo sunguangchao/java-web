@@ -18,5 +18,4 @@
             <default-content-type>text/html</default-content-type>
         </jsp-property-group>
     </jsp-config>
-
 </web-app>

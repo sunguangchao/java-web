@@ -11,6 +11,7 @@ import javax.servlet.http.Part;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Instant;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -37,6 +38,7 @@ public class TicketServlet extends HttpServlet
         String action = request.getParameter("action");
         if(action == null)
             action = "list";
+        //根据action执行对应的函数
         switch(action)
         {
             case "create":
@@ -80,6 +82,7 @@ public class TicketServlet extends HttpServlet
     {
         request.getRequestDispatcher("/WEB-INF/jsp/view/ticketForm.jsp")
                .forward(request, response);
+        //路径是基于web的相对路径下
     }
 
     private void viewTicket(HttpServletRequest request,
@@ -90,7 +93,7 @@ public class TicketServlet extends HttpServlet
         Ticket ticket = this.getTicket(idString, response);
         if(ticket == null)
             return;
-
+        //设置两个属性
         request.setAttribute("ticketId", idString);
         request.setAttribute("ticket", ticket);
 
@@ -144,9 +147,10 @@ public class TicketServlet extends HttpServlet
             throws ServletException, IOException
     {
         Ticket ticket = new Ticket();
-        ticket.setCustomerName(request.getParameter("customerName"));
+        ticket.setCustomerName((String) request.getSession().getAttribute("username"));
         ticket.setSubject(request.getParameter("subject"));
         ticket.setBody(request.getParameter("body"));
+        ticket.setDateCreated(Instant.now());
 
         Part filePart = request.getPart("file1");
         if(filePart != null && filePart.getSize() > 0)

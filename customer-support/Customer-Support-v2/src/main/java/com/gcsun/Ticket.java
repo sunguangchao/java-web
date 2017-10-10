@@ -1,5 +1,6 @@
 package com.gcsun;
 
+import java.time.Instant;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -11,6 +12,16 @@ public class Ticket
     private String subject;
 
     private String body;
+
+    public Instant getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Instant dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    private Instant dateCreated;
 
     private Map<String, Attachment> attachments = new LinkedHashMap<>();
 
