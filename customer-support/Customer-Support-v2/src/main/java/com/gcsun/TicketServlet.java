@@ -27,6 +27,7 @@ import java.util.Map;
 )
 public class TicketServlet extends HttpServlet
 {
+    //volatile用于保证其他线程始终可以读取到变量修改后的最终值
     private volatile int TICKET_ID_SEQUENCE = 1;
 
     private Map<Integer, Ticket> ticketDatabase = new LinkedHashMap<>();
@@ -124,10 +125,13 @@ public class TicketServlet extends HttpServlet
             return;
         }
 
+        //处理客户端浏览器的下载请求
+        //Content-Disposition:强制浏览器询问客户是保存还是下载文件，而不是在浏览器中打开该文件
         response.setHeader("Content-Disposition",
                 "attachment; filename=" + attachment.getName());
         response.setContentType("application/octet-stream");
 
+        //将文件输出到响应中
         ServletOutputStream stream = response.getOutputStream();
         stream.write(attachment.getContents());
     }
@@ -161,6 +165,7 @@ public class TicketServlet extends HttpServlet
         }
 
         int id;
+        //同步代码块
         synchronized(this)
         {
             id = this.TICKET_ID_SEQUENCE++;
@@ -170,6 +175,7 @@ public class TicketServlet extends HttpServlet
         response.sendRedirect("tickets?action=view&ticketId=" + id);
     }
 
+    //负责处理文件上传任务
     private Attachment processAttachment(Part filePart)
             throws IOException
     {
@@ -185,6 +191,7 @@ public class TicketServlet extends HttpServlet
         }
 
         Attachment attachment = new Attachment();
+        //getSubmittedFileName:识别文件在上传之前的原始名称
         attachment.setName(filePart.getSubmittedFileName());
         attachment.setContents(outputStream.toByteArray());
 

@@ -18,6 +18,7 @@ import java.nio.ByteBuffer;
  */
 public class ChatMessageCodec implements Encoder.BinaryStream<ChatMessage>,
         Decoder.BinaryStream<ChatMessage>{
+    //定义Json的Mapper及其相关属性
     private static final ObjectMapper MAPPER = new ObjectMapper();
     static {
         MAPPER.findAndRegisterModules();

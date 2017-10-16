@@ -34,27 +34,29 @@ public class ChatEndpoint implements HttpSessionListener{
     private static final Map<Long, ChatSession> chatSessions = new Hashtable<>();
     private static final Map<Session, ChatSession> sessions = new Hashtable<>();
     private static final Map<Session, HttpSession> httpSessions = new Hashtable<>();
+    //等待会话列表
     public static final List<ChatSession> pendingSessions = new ArrayList<>();
 
     @OnOpen
-    //新的握手完成后，
+    //新的握手完成后，session和httpSession的区别
     public void onOpen(Session session, @PathParam("sessionId") long sessionId){
         HttpSession httpSession = (HttpSession) session.getUserProperties().get(ChatEndpoint.HTTP_SESSION_PROPERTY);
         try {
             if (httpSession == null || httpSession.getAttribute("username") == null){
                 session.close(new CloseReason(
+                        //An Enumeration of status codes for a web socket close that are defined in the specification
                         CloseReason.CloseCodes.VIOLATED_POLICY,
                         "You are not logged in!"
                 ));
                 return;
             }
             String username = (String)httpSession.getAttribute("username");
-            session.getUserProperties().put("username", username);//
+            session.getUserProperties().put("username", username);
             ChatMessage message = new ChatMessage();
             message.setTimestamp(OffsetDateTime.now());
             message.setUser(username);
             ChatSession chatSession;
-            //创建新会话
+            //如果sessionId等于0，创建新会话，并添加到等待会话列表中
             if (sessionId < 1)
             {
                 message.setType(ChatMessage.Type.STARTED);
@@ -63,19 +65,25 @@ public class ChatEndpoint implements HttpSessionListener{
                 synchronized (ChatEndpoint.sessionIdSequenceLock){
                     chatSession.setSessionId(ChatEndpoint.sessionIdSequence++);
                 }
+                //设置session
                 chatSession.setCustomer(session);
                 chatSession.setCustomerUsername(username);
                 chatSession.setCreationMessage(message);
                 ChatEndpoint.pendingSessions.add(chatSession);
+                //聊天服务器映射
                 ChatEndpoint.chatSessions.put(chatSession.getSessionId(), chatSession);
             }else{
+                //如果sesssionId大于0，则不需要创建新会话
                 message.setType(ChatMessage.Type.JOINED);
                 message.setContent(username + " joined the chat session");
+                //从映射中根据sessionId获取chatSession
                 chatSession = ChatEndpoint.chatSessions.get(sessionId);
                 chatSession.setRepresentative(session);
                 chatSession.setRepresentativeUsername(username);
                 ChatEndpoint.pendingSessions.remove(chatSession);
-                session.getBasicRemote().sendObject(chatSession.getCreationMessage());
+                //getBasicRemote()：阻塞式消息推送
+                //getAsyncRemote()：非阻塞式消息推送
+                session.getBasicRemote().sendObject(chatSession.getCreationMessage());//把对象直接发送出去
                 session.getBasicRemote().sendObject(message);
             }
 

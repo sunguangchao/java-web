@@ -8,16 +8,18 @@ import java.util.Date;
 
 /**
  * Created by 11981 on 2017/9/30.
+ * 使用监听器检测会话的变化
  */
 public class SessionListener implements HttpSessionListener, HttpSessionIdListener{
     private SimpleDateFormat formatter = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
 
+    //创建新的会话时调用
     @Override
     public void sessionCreated(HttpSessionEvent e){
         System.out.println(this.date() + ": Session" + e.getSession().getId() + " created.");
         SessionRegistry.addSession(e.getSession());
-
     }
+    //会话结束时调用
     @Override
     public void sessionDestroyed(HttpSessionEvent e){
         System.out.println(this.date() + ": Session " + e.getSession().getId() +
