@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gcsun.dao.BookDao">
+    <sql id="cols">
+        bookId,bookName,bookWriter,bookType,bookPress,bookNum,bookSellingPrice,bookBorrowPrice,bookAddress
+    </sql>
+    <!-- 添加书 -->
+    <insert id="addBook" parameterType="Book">
+        insert into
+            book(bookId,bookName,bookWriter,bookType,bookPress,bookNum,bookSellingPrice,bookBorrowPrice,bookAddress)
+        values
+            (#{bookId},#{bookName},#{bookWriter},#{bookType},#{bookPress},#{bookNum},
+        #{bookSellingPrice},#{bookBorrowPrice},#{bookAddress})
+    </insert>
+
+    <!-- 分页查询 -->
+    <select id="findBook" parameterType="int" resultType="Book">
+        select
+            <include refid="cols"/>
+        from
+            book
+        limit #{startPage}, 12
+    </select>
+    <!-- 查询所有书 -->
+    <select id="findAllBooks" resultType="Book">
+        select
+            <include refid="cols"/>
+        from
+            book
+    </select>
+    <!-- 查询书的详情 -->
+
+    <select id="findBookProduct" parameterType="String" resultType="Book">
+        select
+            <include refid="cols"/>
+        from
+            book
+        where
+            bookId = #{bookId}
+    </select>
+
+</mapper>
