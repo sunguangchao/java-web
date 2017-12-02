@@ -22,6 +22,9 @@ public class PerformanceMonitor {
         }
     }
 
+    /**
+     * 结束对目标类的监视
+     */
     public static void end(){
         System.out.println("end monitor...");
         MethodPerformance mp = performanceRecord.get();

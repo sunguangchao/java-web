@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
  * Created by 11981 on 2017/11/14.
  * JDK 动态代理
  * 实现InvocationHandler
+ * 相当于编织器，整合横切逻辑和业务逻辑
  */
 public class PerformanceHandler implements InvocationHandler {
     private Object target;

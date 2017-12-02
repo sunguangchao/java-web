@@ -4,6 +4,7 @@ import org.junit.Test;
 
 /**
  * Created by 11981 on 2017/11/14.
+ * CGLib动态代理
  */
 public class ForumServiceTest2 {
     @Test

@@ -25,6 +25,5 @@ public class CglibProxy implements MethodInterceptor {
         Object result = proxy.invokeSuper(obj, args);//通过代理类调用父类中的方法。
         PerformanceMonitor.end();
         return result;
-
     }
 }

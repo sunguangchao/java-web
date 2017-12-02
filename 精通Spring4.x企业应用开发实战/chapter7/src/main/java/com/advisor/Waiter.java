@@ -4,6 +4,7 @@ import com.aop.BeanSelfProxyAware;
 
 /**
  * Created by 11981 on 2017/12/1.
+ * 保证礼貌用语的实例
  */
 public class Waiter implements BeanSelfProxyAware{
     private  Waiter waiter;
@@ -20,6 +21,5 @@ public class Waiter implements BeanSelfProxyAware{
     public void greetTo(String name) {
         System.out.println("waiter greet to "+name+"...");
     }
-
 
 }
