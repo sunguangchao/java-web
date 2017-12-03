@@ -7,7 +7,20 @@
 	http://www.springframework.org/schema/util
 	http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 
+    <!--静态方法配置切面-->
     <bean id="waiterTarget" class="com.advisor.Waiter" />
+    <bean id="sellerTarget" class="com.advisor.Seller"/>
+    <bean id="greetingAdvice" class="com.advisor.GreetingBeforeAdvice" />
+
+    <bean id="greetingAdvisor" class="com.advisor.GreetingAdvisor"
+          p:advice-ref="greetingAdvice"/><!--向切面注入一个前置增强-->
+    <!--通过一个父bean定义公共的配置信息-->
+    <bean id="parent" abstract="true"
+          class="org.springframework.aop.framework.ProxyFactoryBean"
+          p:interceptorNames="greetingAdvisor"
+          p:proxyTargetClass="true" />
+    <bean id="waiter" parent="parent" p:target-ref="waiterTarget" />
+    <bean id="seller" parent="parent" p:target-ref="sellerTarget" />
 
     <!-- 动态切面 -->
     <bean id="dynamicAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">

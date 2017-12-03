@@ -28,12 +28,17 @@
         p:interceptorNames="greetingBefore, greetingAfter"/>
      -->
     <!--3. around advice -->
+     <bean id="waiter" class="org.springframework.aop.framework.ProxyFactoryBean"
+           p:proxyInterfaces="com.advice.Waiter" p:target-ref="target"
+           p:interceptorNames="greetingAround" />
 
-    <bean id="waiter" class="org.springframework.aop.framework.ProxyFactoryBean"
-          p:proxyInterfaces="com.advice.Waiter" p:target-ref="target"
-          p:interceptorNames="greetingAround" />
-
-
+     <!--4. 异常抛出增强  -->
+    <bean id="forumServiceTarget" class="com.advice.ForumService"/>
+    <bean id="transactionManager" class="com.advice.TransactionManager"/>
+    <bean id="forumService" class="org.springframework.aop.framework.ProxyFactoryBean"
+          p:interceptorNames="transactionManager"
+          p:target-ref="forumServiceTarget"
+          p:proxyTargetClass="true"/>
 
 
 
