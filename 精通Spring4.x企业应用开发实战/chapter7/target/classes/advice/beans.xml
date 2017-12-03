@@ -5,9 +5,9 @@
      http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
     <bean id="greetingBefore" class="com.advisor.GreetingBeforeAdvice" />
-
+    <bean id="greetingAfter" class="com.advice.GreetingAfterAdvice"/>
     <bean id="greetingAdvice" class="com.advisor.GreetingBeforeAdvice" />
-
+    <bean id="greetingAround" class="com.advice.GreetingInterceptor" />
     <bean id="target" class="com.advice.NaiveWaiter" />
 
 
@@ -21,18 +21,18 @@
 
 
     <!--2. before and after advice -->
-
-        <bean id="waiter"
+    <!--
+    <bean id="waiter"
         class="org.springframework.aop.framework.ProxyFactoryBean"
         p:proxyInterfaces="com.advice.Waiter" p:target-ref="target"
-        p:interceptorNames="greetingBefore"/>
-
+        p:interceptorNames="greetingBefore, greetingAfter"/>
+     -->
     <!--3. around advice -->
-    <!--有一部分bean的具体位置还未修改
+
     <bean id="waiter" class="org.springframework.aop.framework.ProxyFactoryBean"
-          p:proxyInterfaces="com.advisor.Waiter" p:target-ref="target"
+          p:proxyInterfaces="com.advice.Waiter" p:target-ref="target"
           p:interceptorNames="greetingAround" />
-          -->
+
 
 
 

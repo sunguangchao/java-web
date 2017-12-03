@@ -7,6 +7,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * Created by 11981 on 2017/12/2.
+ * 各种增强类型的测试类
+ *
  */
 public class AdviceTest {
     @Test
