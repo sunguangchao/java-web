@@ -28,6 +28,8 @@ public class ItemCatController {
 //		String result = callback + "(" + json + ")";
 //		return result;
 //	}
+	
+	
 	@RequestMapping("/itemcat/list")
 	@ResponseBody
 	public Object getItemCatList(String callback) {

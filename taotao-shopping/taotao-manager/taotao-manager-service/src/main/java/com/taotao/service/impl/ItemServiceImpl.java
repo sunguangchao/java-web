@@ -98,6 +98,9 @@ public class ItemServiceImpl implements ItemService {
 //		itemMapper.updateByExample(record, example)
 		return null;
 	}
+	
+	
+	
 	private TaotaoResult insertItemDesc(Long itemId, String desc) {
 		TbItemDesc itemDesc = new TbItemDesc();
 		itemDesc.setItemId(itemId);
