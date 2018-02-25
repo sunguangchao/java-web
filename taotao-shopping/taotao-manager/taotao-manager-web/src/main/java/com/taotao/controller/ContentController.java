@@ -19,6 +19,7 @@ public class ContentController {
 	private ContentService contentService;
 	
 	@RequestMapping("/save")
+	@ResponseBody
 	public TaotaoResult insertContent(TbContent content) {
 		TaotaoResult result =  contentService.insertContent(content);
 		return result;

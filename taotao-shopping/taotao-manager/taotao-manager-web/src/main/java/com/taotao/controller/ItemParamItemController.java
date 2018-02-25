@@ -14,7 +14,7 @@ public class ItemParamItemController {
 	@Autowired
 	private ItemParamItemService itemParamItemService;
 	
-	@RequestMapping("/showitem/{itemid}")
+	@RequestMapping("/showitem/{itemId}")
 	public String showItemParam(@PathVariable Long itemId, Model model) {
 		String string = itemParamItemService.getItemParamByItemId(itemId);
 		model.addAttribute("itemParam", string);
